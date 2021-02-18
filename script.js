@@ -1,5 +1,9 @@
 // where are all the error catch block
 
+// use an array of ids
+
+var ids = []
+
 // fetch and store the value to local staorage
 async function load() {
     // localStorage.clear()
@@ -16,6 +20,7 @@ async function load() {
         obj.website = u.website;
         obj.cname = u.company.name;
         // console.log(obj);
+        ids.push(u.id);
         localStorage.setItem(`user${u.id}`, JSON.stringify(obj));
     })
 
@@ -25,7 +30,7 @@ async function load() {
 async function displayHTML() {
     for (let i = 1; i <= localStorage.length; i++) {
             let user = JSON.parse(localStorage.getItem(`user${i}`));
-            
+            console.log(user);
             var tableHead = document.querySelector('table');
 
             let tr = tableHead.insertRow();
@@ -60,17 +65,21 @@ async function displayHTML() {
 
 function addData(name, email, website, cname) {
     // this will add obj in the one that is used to display to the output
+    let newid = localStorage.length + 1;
     obj = {
-        id: localStorage.length + 1,
+        id: newid, // this does not look too good 
         name: name,
         email: email,
         website: website,
         cname: cname
     }
+    localStorage.setItem(`user${newid}`, JSON.stringify(obj));
 }
+
 
 function deleteUser(id) {
     // update the id too
+    localStorage.removeItem(`user${id}`)
 }
 
 function findUserById(id) {
@@ -79,6 +88,7 @@ function findUserById(id) {
 
 function start() {
     load();
+    console.log(ids);
     // console.log(findUserById(2));
     displayHTML();    
 }
