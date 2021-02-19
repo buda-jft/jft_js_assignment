@@ -2,8 +2,8 @@
 
 // use an array of ids
 
-// var ids = []
-var ids = new Array();
+var ids = []
+// var ids = new Array();
 
 // fetch and store the value to local staorage
 async function load() {
@@ -24,81 +24,80 @@ async function load() {
         ids.push(u.id);
         localStorage.setItem(`user${u.id}`, JSON.stringify(obj));
     })
-    
-
 }
 
-
-async function displayHTML() {
-    // console.log(ids);
-   
-
-
-    for (let i = 0; i < ids.length; i++) {
-        // console.log(`user${ids[i]}`);
-        
+async function generateHTML() {
+    let md = "";
+    let tableHead = document.getElementById('grid');
+    for(let i = 0; i < ids.length; i++) {
         let user = JSON.parse(localStorage.getItem(`user${ids[i]}`));
-        // console.log(user);
-        var tableHead = document.querySelector('table');
-
-        let tr = tableHead.insertRow();
-
-        let tname = tr.insertCell();
-        text = document.createTextNode(user.name);
-        tname.appendChild(text);
-
-        let temail = tr.insertCell();
-        text = document.createTextNode(user.email);
-        temail.appendChild(text);
-
-        let twebsite = tr.insertCell();
-        text = document.createTextNode(user.website);
-        twebsite.appendChild(text);
-
-        let tcname = tr.insertCell();
-        text = document.createTextNode(user.cname);
-        tcname.appendChild(text);
-
-        // create btn 1
-        let tbtn1 = tr.insertCell();
-        tbtn1.innerHTML = `<button onClick="deleteUser(".$num.")">Edit</button>`
-        
-        // create btn 2
-        let tbtn2 = tr.insertCell();
-        tbtn2.innerHTML = `<button onClick="editUser(".$num.")">Delete</button>`
-
-        }
+        md += "<tr><td>" +user.name + "</td>";
+        md += "<td>" +user.email + "</td>";
+        md += "<td>" +user.website + "</td>";
+        md += "<td>" +user.cname + "</td>";
+        md += `<td><button onClick = "deleteUser(${user.id})">Delete</button></td>`;
+        md += `<td><button onClick = "editUser(${user.id})">Edit</button></td></tr>`;
+    }
+    // console.log(md);
+    tableHead.innerHTML = md;
 }
 
-
-function addData(name, email, website, cname) {
+function addUser(name, email, website, cname) {
     // this will add obj in the one that is used to display to the output
-    let newid = localStorage.length + 1;
+    // let newid = the the last in the id list + 1
+    
+    let newid = ids[ids.length - 1] + 1;
+    console.log(newid); // 11
     obj = {
-        id: newid, // this does not look too good 
+        id: newid, 
         name: name,
         email: email,
         website: website,
         cname: cname
     }
     localStorage.setItem(`user${newid}`, JSON.stringify(obj));
+    // ids -> 9
+    console.log(ids);
+    ids.push(newid);
+    // ids -> 10
+    // localStorage -> [10] 
+
+    console.log(JSON.parse(localStorage.getItem(`user${newid}`))); // log
+    console.log(localStorage.getItem(`user${newid}`)); // log
+    
+    generateHTML();
 }
 
 
 function deleteUser(id) {
     // update the id too
-    localStorage.removeItem(`user${id}`)
+    // console.log(id); // 1
+    // console.log(ids); // [10]
+    
+    localStorage.removeItem(`user${id}`);
+    ids = ids.filter(d => d !== id);
+    
+    // console.log(ids); // [10]
+    
+    generateHTML();
+    // console.log('deleted');
 }
 
 function findUserById(id) {
+    // return console.log(JSON.parse(localStorage.getItem(`user${id}`)));
+    // can use for editing 
+
     return JSON.parse(localStorage.getItem(`user${id}`));
 }
 
 async function start() {
-    await load()
-    // console.log(ids);
-    // console.log(findUserById(2));
-    displayHTML();    
+    localStorage.clear()
+    await load();
+    generateHTML();
+    
+    addUser("ashu", "ashu@mail", "website.com", "jft");
+    // deleteUser(1);
+    // findUserById(3);
 }
 
 start();
