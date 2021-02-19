@@ -47,7 +47,7 @@ function addUser(name, email, website, cname) {
     // let newid = the the last in the id list + 1
     
     let newid = ids[ids.length - 1] + 1;
-    console.log(newid); // 11
+    // console.log(newid); // 11
     obj = {
         id: newid, 
         name: name,
@@ -57,17 +57,31 @@ function addUser(name, email, website, cname) {
     }
     localStorage.setItem(`user${newid}`, JSON.stringify(obj));
     // ids -> 9
-    console.log(ids);
+    // console.log(ids);
     ids.push(newid);
     // ids -> 10
     // localStorage -> [10] 
 
-    console.log(JSON.parse(localStorage.getItem(`user${newid}`))); // log
-    console.log(localStorage.getItem(`user${newid}`)); // log
+    // console.log(JSON.parse(localStorage.getItem(`user${newid}`))); // log
+    // console.log(localStorage.getItem(`user${newid}`)); // log
     
     generateHTML();
 }
 
+
+function addButton() {
+    let name = document.getElementById("recipient-name").value;
+    let email = document.getElementById("email-name").value;
+    let website = document.getElementById("website-name").value;
+    let company = document.getElementById("company-name").value;
+    // console.log(name);
+    addUser(name, email, website, company);
+
+    document.getElementById("recipient-name").value = "";
+    document.getElementById("email-name").value = "";
+    document.getElementById("website-name").value = "";
+    document.getElementById("company-name").value = "";
+}
 
 function deleteUser(id) {
     // update the id too
@@ -96,7 +110,8 @@ async function start() {
     generateHTML();
     
     addUser("ashu", "ashu@mail", "website.com", "jft");
-    // deleteUser(1);
+    // addUser("newq", "sadlkfj@mail", "website.com", "jft");
+    deleteUser();
     // findUserById(3);
 }
 

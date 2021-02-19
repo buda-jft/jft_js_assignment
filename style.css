@@ -11,6 +11,10 @@ td {
     width: 100%;
 }
 
+#addButton {
+    align-items: center;
+}
+
 #grid td {
     align-items: center;
 }
