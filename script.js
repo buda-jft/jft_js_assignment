@@ -2,7 +2,8 @@
 
 // use an array of ids
 
-var ids = []
+// var ids = []
+var ids = new Array();
 
 // fetch and store the value to local staorage
 async function load() {
@@ -23,41 +24,48 @@ async function load() {
         ids.push(u.id);
         localStorage.setItem(`user${u.id}`, JSON.stringify(obj));
     })
+    
 
 }
 
 
 async function displayHTML() {
-    for (let i = 1; i <= localStorage.length; i++) {
-            let user = JSON.parse(localStorage.getItem(`user${i}`));
-            console.log(user);
-            var tableHead = document.querySelector('table');
+    // console.log(ids);
+   
 
-            let tr = tableHead.insertRow();
 
-            let tname = tr.insertCell();
-            text = document.createTextNode(user.name);
-            tname.appendChild(text);
+    for (let i = 0; i < ids.length; i++) {
+        // console.log(`user${ids[i]}`);
+        
+        let user = JSON.parse(localStorage.getItem(`user${ids[i]}`));
+        // console.log(user);
+        var tableHead = document.querySelector('table');
 
-            let temail = tr.insertCell();
-            text = document.createTextNode(user.email);
-            temail.appendChild(text);
+        let tr = tableHead.insertRow();
 
-            let twebsite = tr.insertCell();
-            text = document.createTextNode(user.website);
-            twebsite.appendChild(text);
+        let tname = tr.insertCell();
+        text = document.createTextNode(user.name);
+        tname.appendChild(text);
 
-            let tcname = tr.insertCell();
-            text = document.createTextNode(user.cname);
-            tcname.appendChild(text);
+        let temail = tr.insertCell();
+        text = document.createTextNode(user.email);
+        temail.appendChild(text);
 
-            // create btn 1
-            let tbtn1 = tr.insertCell();
-            tbtn1.innerHTML = `<button onClick="deleteUser(".$num.")">Edit</button>`
-            
-            // create btn 2
-            let tbtn2 = tr.insertCell();
-            tbtn2.innerHTML = `<button onClick="editUser(".$num.")">Delete</button>`
+        let twebsite = tr.insertCell();
+        text = document.createTextNode(user.website);
+        twebsite.appendChild(text);
+
+        let tcname = tr.insertCell();
+        text = document.createTextNode(user.cname);
+        tcname.appendChild(text);
+
+        // create btn 1
+        let tbtn1 = tr.insertCell();
+        tbtn1.innerHTML = `<button onClick="deleteUser(".$num.")">Edit</button>`
+        
+        // create btn 2
+        let tbtn2 = tr.insertCell();
+        tbtn2.innerHTML = `<button onClick="editUser(".$num.")">Delete</button>`
 
         }
 }
@@ -86,11 +94,18 @@ function findUserById(id) {
     return JSON.parse(localStorage.getItem(`user${id}`));
 }
 
-function start() {
-    load();
-    console.log(ids);
+async function start() {
+    await load()
+    // console.log(ids);
     // console.log(findUserById(2));
     displayHTML();    
 }
 
-start()
+start();
+
+
+/* note
+
+start is an async func because load is async
+
+*/
