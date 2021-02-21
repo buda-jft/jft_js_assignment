@@ -27,10 +27,19 @@ function generateHTML() {
         md += "<td>" +user.website + "</td>";
         md += "<td>" +user.cname + "</td>";
         md += `<td><button onClick = "deleteUser(${user.id})">Delete</button></td>`;
-        md += `<td><button onClick = "editUser(${user.id})">Edit</button></td></tr>`;
+        md += `<td><button onClick = "editUser(${user.id})" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal"
+        data-whatever="@getbootstrap">Edit</button></td>`
+        // md += `<td><button onClick = "editUser(${user.id})">Edit</button></td></tr>`;
     }
     // console.log(md);
     tableHead.innerHTML = md;
+}
+
+function editUser(id) {
+    // first generate that modal
+    document.getElementById("exampleModalLabel").innerText = "Edit User";
+    document.getElementById("operation").innerText = "Update!";
+    console.log('user id is ', id);
 }
 
 // add a new user
@@ -58,6 +67,11 @@ function addUser(name, email, website, cname) {
     console.log(`user${newid} is added`);
 }
 
+function updateOperator() {
+    console.log('nanai ');
+    document.getElementById("exampleModalLabel").innerText = "New User";
+    document.getElementById("operation").innerText = "Add User";    
+}
 
 function addButton() {
     let name = document.getElementById("recipient-name").value;
