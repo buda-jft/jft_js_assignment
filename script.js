@@ -27,22 +27,68 @@ function generateHTML() {
         md += "<td>" +user.website + "</td>";
         md += "<td>" +user.cname + "</td>";
         md += `<td><button onClick = "deleteUser(${user.id})">Delete</button></td>`;
-        md += `<td><button onClick = "editUser(${user.id})" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal"
+        md += `<td><button onClick = "updateButton(${user.id})" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal"
         data-whatever="@getbootstrap">Edit</button></td>`
     }
     tableHead.innerHTML = md;
 }
 
-function editUser(id) {
+function updateUser(id) {
+    console.log('nani nani');
+
+    let name = document.getElementById("recipient-name").value;
+    console.log('name is now ', name);
+    let email = document.getElementById("email-name").value;
+    let website = document.getElementById("website-name").value;
+    let company = document.getElementById("company-name").value;
+
+    let obj = {
+        id: id, 
+        name: name,
+        email: email,
+        website: website,
+        cname: company
+    };
+    
+    localStorage.setItem(`user${id}`, JSON.stringify(obj));
+    generateHTML();
+    
+}
+
+function updateButton(id) {
     // first generate that modal
     updateOperator('edit');
-    console.log('user id is ', id);
+    // console.log('user id is ', id);
+
+    let user = findUserById(id);
+    // console.log(user, typeof(user));
+
+    document.getElementById("recipient-name").value = user.name;
+    document.getElementById("email-name").value = user.email;
+    document.getElementById("website-name").value = user.website;
+    document.getElementById("company-name").value = user.cname;
+
+    let operation = document.getElementById("operation");
+    operation.setAttribute(onclick, "updateUser(id)");
+    // updateUser(id);
 }
+
+
+function clearModal() {
+    // console.log('called');
+    document.getElementById("recipient-name").value = "";
+    document.getElementById("email-name").value = "";
+    document.getElementById("website-name").value = "";
+    document.getElementById("company-name").value = "";    
+}
+
+// this will clean up the form -- not working -- called once at start
+// $("#exampleModal").on('hidden.bs.modal', clearModal());
 
 // add a new user
 function addUser(name, email, website, cname) {
     let newid = ids[ids.length - 1] + 1;
-    obj = {
+    let obj = {
         id: newid, 
         name: name,
         email: email,
@@ -61,7 +107,9 @@ function updateOperator(label) {
     let operation = document.getElementById("operation");
 
     exampleModalLabel.innerText = (label === "add" ? "New User" : "Edit User");
-    operation.innerText = (label === "edit" ? "Update!" : "Add User" );    
+    operation.innerText = (label === "edit" ? "Update!" : "Add User" );
+    
+    // ideally should change what func to call too
 }
 
 function addButton() {
@@ -69,13 +117,10 @@ function addButton() {
     let email = document.getElementById("email-name").value;
     let website = document.getElementById("website-name").value;
     let company = document.getElementById("company-name").value;
-    // console.log(name);
+    console.log("called add");
     addUser(name, email, website, company);
 
-    document.getElementById("recipient-name").value = "";
-    document.getElementById("email-name").value = "";
-    document.getElementById("website-name").value = "";
-    document.getElementById("company-name").value = "";
+    // clearModal();
 
     // also close after one user add
 }
