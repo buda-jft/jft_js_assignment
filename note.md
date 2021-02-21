@@ -2,6 +2,14 @@ note:
 
     don't use append child as it is very strong ???
 
+    to do :
+        [] validation in add user
+        [] align the table headers
+        [] delete func
+        [] edit func
+
+    other approaches:
+        if the local storage is changed then call the html generator
 
 async function displayHTML() {
     // console.log(ids);
