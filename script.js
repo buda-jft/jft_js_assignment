@@ -33,26 +33,11 @@ function generateHTML() {
     tableHead.innerHTML = md;
 }
 
-function updateUser(id) {
-    console.log('nani nani');
+var updateId = null;
 
-    let name = document.getElementById("recipient-name").value;
-    console.log('name is now ', name);
-    let email = document.getElementById("email-name").value;
-    let website = document.getElementById("website-name").value;
-    let company = document.getElementById("company-name").value;
-
-    let obj = {
-        id: id, 
-        name: name,
-        email: email,
-        website: website,
-        cname: company
-    };
-    
-    localStorage.setItem(`user${id}`, JSON.stringify(obj));
-    generateHTML();
-    
+function curUpdateId() {
+    // seems very hacky
+    return updateId;
 }
 
 function updateButton(id) {
@@ -68,9 +53,7 @@ function updateButton(id) {
     document.getElementById("website-name").value = user.website;
     document.getElementById("company-name").value = user.cname;
 
-    let operation = document.getElementById("operation");
-    operation.setAttribute(onclick, "updateUser(id)");
-    // updateUser(id);
+    updateId = user.id;
 }
 
 
@@ -112,13 +95,35 @@ function updateOperator(label) {
     // ideally should change what func to call too
 }
 
-function addButton() {
+function addeditButton() {
+    // this will handle both adding and editing depending on context
+    let operation = document.getElementById("operation");
+    console.log(operation.innerText, "from ? ");
+
     let name = document.getElementById("recipient-name").value;
     let email = document.getElementById("email-name").value;
     let website = document.getElementById("website-name").value;
     let company = document.getElementById("company-name").value;
-    console.log("called add");
-    addUser(name, email, website, company);
+
+    if(operation.innerText === "Update!") {
+        // how do i get the id here
+        console.log("called update");
+        let obj = {
+            id: updateId, 
+            name: name,
+            email: email,
+            website: website,
+            cname: company
+        };
+        
+        localStorage.setItem(`user${updateId}`, JSON.stringify(obj));
+        generateHTML();        
+    }
+    if(operation.innerText === "Add User") {
+        console.log("called add");
+        addUser(name, email, website, company);
+    }
+
 
     // clearModal();
 
