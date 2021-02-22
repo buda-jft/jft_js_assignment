@@ -20,6 +20,12 @@ async function load() {
 function generateHTML() {
     let md = "";
     let tableHead = document.getElementById('grid');
+    md += `<tr><th>name</th>
+            <th>email</th>
+            <th>website</th>
+            <th>company name</th>
+            <th>btn 1</th>
+            <th>btn 2</th></tr>`
     for(let i = 0; i < ids.length; i++) {
         let user = JSON.parse(localStorage.getItem(`user${ids[i]}`));
         md += "<tr><td>" +user.name + "</td>";
@@ -92,7 +98,6 @@ function updateOperator(label) {
     exampleModalLabel.innerText = (label === "add" ? "New User" : "Edit User");
     operation.innerText = (label === "edit" ? "Update!" : "Add User" );
     
-    // ideally should change what func to call too
 }
 
 function addeditButton() {
@@ -123,11 +128,6 @@ function addeditButton() {
         console.log("called add");
         addUser(name, email, website, company);
     }
-
-
-    // clearModal();
-
-    // also close after one user add
 }
 
 function deleteUser(id) {
