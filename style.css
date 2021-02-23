@@ -8,15 +8,34 @@ header {
     top: 0;
 }
 
+#counts {
+    font-size: larger;
+}
+
+#total_count {
+    float: left;
+    margin-left: 30px;
+}
+#delete_count {
+    float: left;
+    margin-left: 30px;
+
+}
+#edit_count {
+    float: left;
+    margin-left: 20px;
+}
+
 td {
     align-items: center;
 }
 
 #grid {
+    clear: both;
     width: 100%;
     height: 100%;
     font-size: larger;
-    margin-top: 50px;
+    margin-top: 100px;
     /* margin-bottom: 30px; */
 }
 

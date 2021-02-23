@@ -1,4 +1,8 @@
 var ids = [];
+var counts = {
+    totalDeleteCount: 0,
+    totalEditCount: 0
+};
 
 async function load() {
     let res = await fetch('https://jsonplaceholder.typicode.com/users'); // will be a res obj
@@ -37,6 +41,7 @@ function generateHTML() {
         data-whatever="@getbootstrap">Edit</button></td>`
     }
     tableHead.innerHTML = md;
+    document.getElementById('total_count').innerText = `Total count : ${ids.length}`;
 }
 
 var updateId = null;
@@ -122,7 +127,9 @@ function addeditButton() {
         };
         
         localStorage.setItem(`user${updateId}`, JSON.stringify(obj));
-        generateHTML();        
+        generateHTML();
+        counts.totalEditCount += 1;
+        document.getElementById('edit_count').innerText = `Edit count : ${counts.totalEditCount}`;        
     }
     if(operation.innerText === "Add User") {
         console.log("called add");
@@ -135,6 +142,8 @@ function deleteUser(id) {
     ids = ids.filter(d => d !== id);
     generateHTML();
     console.log(`user${id} is deleted`);
+    counts.totalDeleteCount += 1;
+    document.getElementById('delete_count').innerText = `Delete count : ${counts.totalDeleteCount}`;
 }
 
 // for editing 

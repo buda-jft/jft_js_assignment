@@ -13,17 +13,20 @@
 <link rel="stylesheet" href="style.css">
 <body>
     <header>
-        <h1>
-            JS ASSIGNMENT
-        </h1>
+        <h1>JS ASSIGNMENT</h1>
+        <p id="counts">
+            <div id="total_count"></div>
+            <div id="delete_count"></div>
+            <div id="edit_count"></div>
+        </p>
     </header>
     <table id="grid">
 
     </table>
 
     <!-- Add modal -->   
-    <button onclick="updateOperator('add')" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal"
-        data-whatever="@getbootstrap">Add User</button>
+    <!-- <button onclick="updateOperator('add')" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal"
+        data-whatever="@getbootstrap">Add User</button> -->
     
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -63,10 +66,12 @@
         </div>
     </div>
     <footer>
-        ThankYou
+        <button onclick="updateOperator('add')" type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#exampleModal" data-whatever="@getbootstrap">Add User</button>
+        <div>ThankYou</div>
     </footer>
     <!-- <br> -->
     <!-- <button type="button" class="btn btn-primary btn-block">Add</button> -->
-<script type="text/javascript" src="./script.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
 </body>
 </html>
